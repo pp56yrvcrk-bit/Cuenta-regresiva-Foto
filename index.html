@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuenta regresiva con mensaje final</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #0f172a;
+      color: #f1f5f9;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      transition: all 0.5s ease;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    #countdown {
+      font-size: 3rem;
+      font-weight: bold;
+      background: #1e293b;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+    #message {
+      display: none;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    #message img {
+      max-width: 80vw;
+      max-height: 80vh;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1 id="titulo1">Preparat per la següent pista? 🥰</h1>
+  <div id="countdown">01:00:00</div>
+  <h1 id="titulo2">Toca esperar ⏱️</h1>
+
+  <div id="message">
+    <img src="https://decofilia.com/wp-content/uploads/2023/09/trasteros-4.jpg" alt="Mensaje final">
+  </div>
+
+  <script>
+    // Tiempo total en segundos (1 hora = 3600)
+    const duracion = 3600;
+    const countdown = document.getElementById("countdown");
+    const message = document.getElementById("message");
+    const titulo1 = document.getElementById("titulo1");
+    const titulo2 = document.getElementById("titulo2");
+
+    // Guardamos la hora de inicio y de finalización
+    const inicio = new Date();
+    const fin = new Date(inicio.getTime() + duracion * 1000);
+
+    const timer = setInterval(() => {
+      const ahora = new Date();
+      const restante = Math.floor((fin - ahora) / 1000);
+
+      if (restante >= 0) {
+        const horas = Math.floor(restante / 3600);
+        const minutos = Math.floor((restante % 3600) / 60);
+        const segundos = restante % 60;
+
+        countdown.textContent =
+          `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+      } else {
+        clearInterval(timer);
+        // Ocultar todo excepto el mensaje final
+        countdown.style.display = "none";
+        titulo1.style.display = "none";
+        titulo2.style.display = "none";
+        message.style.display = "block";
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
